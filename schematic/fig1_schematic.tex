@@ -1,0 +1,41 @@
+\documentclass[border=4pt]{standalone}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,fit,backgrounds,calc}
+\usepackage[scaled=0.92]{helvet}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage{amsmath,amssymb}
+\usepackage{sansmath}\sansmath
+\definecolor{blue}{HTML}{2A78D6}\definecolor{lblue}{HTML}{CDE2FB}
+\definecolor{orange}{HTML}{EB6834}\definecolor{lorange}{HTML}{FCE3D8}
+\definecolor{aqua}{HTML}{1BAF7A}\definecolor{laqua}{HTML}{D3F1E6}
+\definecolor{grey}{HTML}{52514E}\definecolor{lgrey}{HTML}{F0EFEC}
+\definecolor{violet}{HTML}{6250D6}\definecolor{lviolet}{HTML}{E3E0FA}
+\begin{document}
+\begin{tikzpicture}[
+  font=\small, node distance=5mm and 7mm,
+  box/.style={draw=#1, fill=l#1, rounded corners=3pt, line width=0.8pt, align=center, inner sep=4pt, text width=33mm, minimum height=15mm},
+  arr/.style={-{Stealth[length=2.6mm]}, line width=0.9pt, draw=grey},
+  lab/.style={font=\scriptsize, text=grey, align=center}]
+\node[box=grey] (hosp) {\textbf{Hospital admissions}\\ NHSN, weekly, by state\\ COVID-19, flu, RSV};
+\node[box=grey, below=of hosp] (ww) {\textbf{Wastewater}\\ NWSS, site-normalised\\ past-only processing};
+\node[box=blue, right=of hosp] (rec) {\textbf{Exact reconstruction}\\ $C_w=\beta_w\tilde I_w\,\varphi(\beta_w-\gamma)$\\ $\Rightarrow\beta_w,\ \tilde I_w,\ \mathcal R_w=\beta_w/\gamma$};
+\node[box=blue, right=of rec] (ml) {\textbf{Rate forecasts}\\ gradient boosting\\ $\log\hat\beta_{T+k},\ k=1,\dots,4$};
+\node[box=blue, right=of ml] (ivp) {\textbf{SIR-IVP integration}\\ $\dot{\tilde I}=(\hat\beta-\gamma)\tilde I,\ \dot C=\hat\beta\tilde I$\\ admission forecasts};
+\node[box=aqua, below=of ivp] (cal) {\textbf{Predictive distributions}\\ rolling residual\\ calibration (WIS, PIT)};
+\node[box=violet, below=of ml] (alloc) {\textbf{Surge allocation}\\ point: LP\\ distribution: water-filling};
+\node[box=orange, below=of rec] (out) {\textbf{Reporting outage}\\ hospital data stop;\\ wastewater drives $\hat\beta$};
+\draw[arr] (hosp) -- (rec);
+\draw[arr] (rec) -- (ml);
+\draw[arr] (ml) -- (ivp);
+\draw[arr] (ivp) -- (cal);
+\draw[arr] (cal) -- (alloc);
+\draw[arr] (ww.east) -- ++(3.5mm,0) |- ($(rec.south)!0.5!(out.north)$) -| ($(ml.south west)!0.25!(ml.south east)$);
+\draw[arr, draw=orange, dashed] (out.east) -- (alloc.west);
+\draw[arr, draw=orange, dashed] (ww.east) -- (out.west);
+\node[lab, above=1mm of rec] {Thm 1, Prop 1, Thm 2};
+\node[lab, above=1mm of ml] {features: $\log\beta$ lags, admissions,\\ season, wastewater};
+\node[lab, above=1mm of ivp] {Thm 3, Cor 1};
+\node[lab, below=1mm of alloc] {Thm 4 (point), Thm 5 (distribution)};
+\node[lab, below=1mm of out] {tracking up to 8 weeks};
+\end{tikzpicture}
+\end{document}
