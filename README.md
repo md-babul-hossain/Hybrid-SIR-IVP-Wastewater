@@ -1,5 +1,7 @@
 # Code and data for: A Hybrid SIR-IVP Model With Machine Learning and Wastewater Data
 
+> **Note:** The result files are provided in `results.zip`. Unzip it in the repository folder to create the `results/` directory used by the scripts.
+
 **Paper:** Hossain, M. B., Uddin, M. S., & Miah, M. M. (2026). *A Hybrid SIR-IVP Model With Machine Learning and Wastewater Data: Forecasting COVID-19 and Influenza Hospital Admissions and Allocating Surge Capacity Across Ten U.S. States.* Manuscript submitted for publication.
 
 **Authors:** Md Babul Hossain (corresponding author; Department of Mathematics and Statistics, Florida Atlantic University, Boca Raton, FL 33431, USA; mdhossain2024@fau.edu), Md. Sharif Uddin (Department of Mathematics, SUNY Broome Community College, Binghamton, NY 13905, USA; uddinm@sunybroome.edu) and Md. Musa Miah (Department of Mathematics, Mawlana Bhashani Science and Technology University, Tangail-1902, Bangladesh; mmusa@mbstu.ac.bd)
